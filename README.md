@@ -9,7 +9,9 @@
 Numerical setup for the WEC Control Competition (WECCCOMP) using WEC-Sim to model the WaveStar.
 
 To Do:
-* add Franceso's lin->rot and rot->lin in 'Rotary' variant subsystem (i.e. WaveStar_Francesco.slx and controller_init.m)
-* add damping/drag values? 
-* add non-linear hydrostatic look-up table?
-* do we want to cmd pos (or just cmd force)?
+* Add Franceso's lin->rot and rot->lin in 'Rotary' variant subsystem (i.e. WaveStar_Francesco.slx and controller_init.m)
+* Add damping/drag values? 
+* Add non-linear hydrostatic look-up table?
+* Add cmd pos (or just cmd force)?
+* Compare to exp data (NT)
+* Rotate WaveStar geom 180deg (KR)
