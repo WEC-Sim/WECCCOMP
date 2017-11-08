@@ -1,9 +1,9 @@
-%% Author: Kelley Ruehl, Sandia National Laboratories
-% Description:  WaveStar model with WAMIT BEM data for WECCCOMP
+%% WaveStar model with WAMIT data for WECCCOMP
+% Author: Kelley Ruehl, Sandia National Laboratories
 %
 %% Simulation Data
 simu = simulationClass();                       % Create the Simulation Variable
-    simu.simMechanicsFile = 'WaveStar.slx';         % Specify Simulink Model File
+    simu.simMechanicsFile = 'WaveStar_LinRot.slx';         % Specify Simulink Model File
     simu.dt = 0.01;                                 % Simulation Time-Step [s]
     simu.rampTime = 8*5;                         	% Wave Ramp Time Length [s]
     simu.endTime = 8*20;                            % Simulation End Time [s]
