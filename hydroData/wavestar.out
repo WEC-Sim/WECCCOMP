@@ -24,7 +24,7 @@
 
  Low-order panel method  (ILOWHI=0)                                     
                                                                         
- Input from Geometric Data File:         Float_cutSWL.GDF               
+ Input from Geometric Data File:         Float.GDF               
  Rhino->WAMIT file export (mesh)                                        
                                                                         
  Input from Potential Control File:      wavestar.pot                   
