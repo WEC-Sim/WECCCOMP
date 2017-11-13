@@ -19,16 +19,17 @@ simu = simulationClass();                       % Create the Simulation Variable
 %     waves.T = 1.5;  
 %     
 %% Regular Waves  
-waves = waveClass('regularCIC');                % Initialize waveClass
-    waves.H = 0.25;                                  % Wave Height [m]
-    waves.T = 1.5;                                   % Wave Period [s]
-
-%% Irregular Waves  
-% waves = waveClass('irrregular');                % Initialize waveClass
+% waves = waveClass('regularCIC');                % Initialize waveClass
 %     waves.H = 0.25;                                  % Wave Height [m]
 %     waves.T = 1.5;                                   % Wave Period [s]
-%     
-    
+
+%% Irregular Waves  
+waves = waveClass('irregular');                % Initialize waveClass
+    waves.H = 0.0625;                             	% Wave Height [m]
+    waves.T = 1.412;                            	% Wave Period [s]
+    waves.spectrumType = 'JS';                    	% Specify Wave Spectrum Type
+    waves.freqDisc = 'EqualEnergy';                 % Uses 'EqualEnergy' bins (default) 
+    waves.phaseSeed = 1;                            % Phase is seeded so eta is the same    
     
 %% Body Data
 %% Float and Arm EC - ROTATE
