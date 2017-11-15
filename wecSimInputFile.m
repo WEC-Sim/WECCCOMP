@@ -1,27 +1,27 @@
 %% WaveStar model with WAMIT data for WECCCOMP
-% Author: Kelley Ruehl, Sandia National Laboratories
 %
 %% Simulation Data
 simu = simulationClass();                       % Create the Simulation Variable
     simu.simMechanicsFile = 'WaveStar_LinRot.slx';         % Specify Simulink Model File
     simu.dt = 0.01;                                 % Simulation Time-Step [s]
-    simu.rampTime = 8*5;                         	% Wave Ramp Time Length [s]
-    simu.endTime = 8*20;                            % Simulation End Time [s]
+    simu.rampTime = 5*1.412;                      	% Wave Ramp Time Length [s]
+    simu.endTime = 25*1.412;                     	% Simulation End Time [s]
     simu.CITime = 2;                                % Convolution Time [s]
     simu.explorer = 'on';                           % explorer on
     simu.solver = 'ode45';                          % turn on ode45
     simu.domainSize = 5;
     simu.ssCalc = 1;
+    simu.mcrCaseFile = 'WECCCOMP_ss.mat';
 
 %% Wave Information  
 %% No Wave
 % waves = waveClass('noWave');
-%     waves.T = 1.5;  
+%     waves.T = 0.79;  
 %     
 %% Regular Waves  
 % waves = waveClass('regularCIC');                % Initialize waveClass
-%     waves.H = 0.25;                                  % Wave Height [m]
-%     waves.T = 1.5;                                   % Wave Period [s]
+%     waves.H = 0.0625;                           	% Wave Height [m]
+%     waves.T = 1.412;                          	% Wave Period [s]
 
 %% Irregular Waves  
 waves = waveClass('irregular');                % Initialize waveClass
@@ -30,6 +30,7 @@ waves = waveClass('irregular');                % Initialize waveClass
     waves.spectrumType = 'JS';                    	% Specify Wave Spectrum Type
     waves.freqDisc = 'EqualEnergy';                 % Uses 'EqualEnergy' bins (default) 
     waves.phaseSeed = 1;                            % Phase is seeded so eta is the same    
+    waves.gamma = 1;
     
 %% Body Data
 %% Float and Arm EC - ROTATE

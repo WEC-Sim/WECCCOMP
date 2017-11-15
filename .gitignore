@@ -17,6 +17,7 @@ $ cat .gitignore
 *.DS_Store
 *.dvi
 *.exp
+*.fig
 *.glg
 *.glo
 *.gls
@@ -58,6 +59,8 @@ $ cat .gitignore
 **/output/
 **/slprj/
 *build_exception*
+*.mat
+!WECCCOMP_ss.mat
 
 # Other
 .DS_Store

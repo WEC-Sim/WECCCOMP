@@ -1,5 +1,6 @@
 %Example of user input MATLAB file for post processing
 close all
+clear power power_eff
 
 %Plot waves
 waves.plotEta(simu.rampTime);
