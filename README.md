@@ -10,8 +10,9 @@
 Numerical model for the WEC Control Competition (WECCCOMP) using WEC-Sim to model the WaveStar.
 
 **To Do:**
-* implement PTO efficiency in post (KR) - update how power is calclated
-* Add lin->rot and rot->lin in 'Rotary' variant subsysteaddedm (i.e. WaveStar_Francesco.slx and controller_init.m) (Francesco)
+* Rotate WaveStar geom 180deg (KR) - COMPLETE
+* implement PTO efficiency in post (KR) - COMPLETE
+* Add lin->rot and rot->lin in 'Rotary' variant subsystem (i.e. WaveStar_Francesco.slx and controller_init.m) (Francesco)
 * Compare to exp data (NT/KR)
 * Add damping/drag values? (Francesco)
 * convert Iyy to cg from A (KR/NT)
@@ -19,6 +20,7 @@ Numerical model for the WEC Control Competition (WECCCOMP) using WEC-Sim to mode
 * test performance metrics w/Controller (NT)
 * run free decay 
 * run WECCCOMP sea states
+* Check if motor_force input is in the axial direction or only the vertical axis
 
 **Questions?**
 * Post all WEC-Sim modeling questions to the [WEC-Sim online forum](https://github.com/WEC-Sim/WEC-Sim/issues).
