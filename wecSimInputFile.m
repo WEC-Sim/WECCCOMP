@@ -2,7 +2,7 @@
 %
 %% Simulation Data
 simu = simulationClass();                       % Create the Simulation Variable
-    simu.simMechanicsFile = 'WaveStar_LinRot.slx';         % Specify Simulink Model File
+    simu.simMechanicsFile = 'WaveStar.slx';         % Specify Simulink Model File
     simu.dt = 0.001;                                 % Simulation Time-Step [s]
     simu.rampTime = 5*1.412;                      	% Wave Ramp Time Length [s]
     simu.endTime = 25*1.412;                     	% Simulation End Time [s]
@@ -18,9 +18,9 @@ simu = simulationClass();                       % Create the Simulation Variable
 % waves = waveClass('noWave');
 %     waves.T = 0.79;
 %% No Wave CIC
-waves = waveClass('noWaveCIC');                % Initialize waveClass
-    waves.H = 0.0;                                  % Wave Height [m]
-    waves.T = 0.0;                                   % Wave Period [s]
+% waves = waveClass('noWaveCIC');                % Initialize waveClass
+%     waves.H = 0.0;                                  % Wave Height [m]
+%     waves.T = 0.0;                                   % Wave Period [s]
 %     
 %% Regular Waves  
 % waves = waveClass('regularCIC');                % Initialize waveClass

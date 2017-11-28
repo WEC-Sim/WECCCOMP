@@ -18,7 +18,9 @@ plotForces(output,1,5)
 
 %Calculate and plot power 
 time =  output.ptos.time;
-power = output.ptos.powerInternalMechanics(:,3);
+force = output.ptos.forceActuation(:,3);
+vel = output.ptos.velocity(:,3);
+power = force.*vel;
 eff = 0.7;
 for i = 1:length(power)
     if power(i)>= 0
