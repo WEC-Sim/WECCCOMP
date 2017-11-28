@@ -2,18 +2,19 @@
 %
 %% Simulation Data
 simu = simulationClass();                       % Create the Simulation Variable
-    simu.simMechanicsFile = 'WaveStar.slx';         % Specify Simulink Model File
-    simu.dt = 0.001;                                 % Simulation Time-Step [s]
-    simu.rampTime = 5*1.412;                      	% Wave Ramp Time Length [s]
-    simu.endTime = 25*1.412;                     	% Simulation End Time [s]
-    simu.CITime = 2;                                % Convolution Time [s]
-    simu.explorer = 'on';                           % explorer on
-    simu.solver = 'ode4';                          % turn on ode45
+    simu.simMechanicsFile = 'WaveStar.slx';     % Specify Simulink Model File
+    simu.dt = 0.001;                            % Simulation Time-Step [s]
+    simu.rampTime = 5*1.412;                    % Wave Ramp Time Length [s]
+    simu.endTime = 25*1.412;                    % Simulation End Time [s]
+    simu.CITime = 2;                            % Convolution Time [s]
+    simu.explorer = 'on';                       % explorer on
+    simu.solver = 'ode4';                       % turn on ode45
     simu.domainSize = 5;
     simu.ssCalc = 1;
     simu.mcrCaseFile = 'WECCCOMP_ss.mat';
 
 %% Wave Information  
+    controller_init
 %% No Wave
 % waves = waveClass('noWave');
 %     waves.T = 0.79;
@@ -24,9 +25,9 @@ simu = simulationClass();                       % Create the Simulation Variable
 %     
 %% Regular Waves  
 % waves = waveClass('regularCIC');                % Initialize waveClass
-%     waves.H = 0.0625;                           	% Wave Height [m]
-%     waves.T = 1.412;                          	% Wave Period [s]
-
+%     waves.H             = 0.0625;               % Wave Height [m]
+%     waves.T             = 1.412;                % Wave Period [s]
+%     waves.wavegaugeloc  = 0.1;
 %% Irregular Waves  
 waves = waveClass('irregular');                % Initialize waveClass
     waves.H = 0.0625;                             	% Wave Height [m]
@@ -35,7 +36,7 @@ waves = waveClass('irregular');                % Initialize waveClass
     waves.freqDisc = 'EqualEnergy';                 % Uses 'EqualEnergy' bins (default) 
     waves.phaseSeed = 1;                            % Phase is seeded so eta is the same    
     waves.gamma = 1;
-    
+    waves.wavegaugeloc  = 0.1;    
 %% Body Data
 %% Float and Arm EC - ROTATE
 body(1) = bodyClass('hydroData/wavestar.h5');     % Initialize bodyClass
