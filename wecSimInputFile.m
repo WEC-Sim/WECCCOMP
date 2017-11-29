@@ -18,31 +18,32 @@ simu = simulationClass();                       % Create the Simulation Variable
 %% No Wave
 % waves = waveClass('noWave');
 %     waves.T = 0.79;
+    
 %% No Wave CIC
-% waves = waveClass('noWaveCIC');                % Initialize waveClass
-%     waves.H = 0.0;                                  % Wave Height [m]
-%     waves.T = 0.0;                                   % Wave Period [s]
-%     
+waves = waveClass('noWaveCIC');                % Initialize waveClass
+    
 %% Regular Waves  
 % waves = waveClass('regularCIC');                % Initialize waveClass
 %     waves.H             = 0.0625;               % Wave Height [m]
 %     waves.T             = 1.412;                % Wave Period [s]
 %     waves.wavegaugeloc  = 0.1;
+
 %% Irregular Waves  
-waves = waveClass('irregular');                % Initialize waveClass
-    waves.H = 0.0625;                             	% Wave Height [m]
-    waves.T = 1.412;                            	% Wave Period [s]
-    waves.spectrumType = 'JS';                    	% Specify Wave Spectrum Type
-    waves.freqDisc = 'EqualEnergy';                 % Uses 'EqualEnergy' bins (default) 
-    waves.phaseSeed = 1;                            % Phase is seeded so eta is the same    
-    waves.gamma = 1;
-    waves.wavegaugeloc  = 0.1;    
+% waves = waveClass('irregular');                % Initialize waveClass
+%     waves.H = 0.0625;                             	% Wave Height [m]
+%     waves.T = 1.412;                            	% Wave Period [s]
+%     waves.spectrumType = 'JS';                    	% Specify Wave Spectrum Type
+%     waves.freqDisc = 'EqualEnergy';                 % Uses 'EqualEnergy' bins (default) 
+%     waves.phaseSeed = 1;                            % Phase is seeded so eta is the same    
+%     waves.gamma = 1;
+%     waves.wavegaugeloc  = 0.1; 
+    
 %% Body Data
 %% Float and Arm EC - ROTATE
 body(1) = bodyClass('hydroData/wavestar.h5');     % Initialize bodyClass
-    body(1).mass = 4.004;                           % Define mass [kg] - from exp   
-%     body(1).mass = 'equilibrium';                 	% Define mass [kg] -> 4.4463 kg  
-    body(1).momOfInertia = [0.2481 0.2481 0.2481];                	% Moment of Inertia [kg*m^2] - from exp     
+%     body(1).mass = 4.004;                           % Define mass [kg] - from exp 4.004 kg
+    body(1).mass = 'equilibrium';                 	% Define mass [kg] -> 4.0673 kg  
+    body(1).momOfInertia = [0.2481 0.2481 0.2481]; 	% Moment of Inertia [kg*m^2] - from exp     
     body(1).geometryFile = 'geometry/FloatArm.stl'; % Geometry File
 
 %% Frame - FIXED
@@ -79,28 +80,22 @@ body(4) = bodyClass('');                     	% Initialize bodyClass
     
 %% PTO and Constraint Parameters
 %% A - Revolute
-constraint(1) = constraintClass('A');       % Initialize constraintClass
-    constraint(1).loc = [-0.438 0 0.302];            	% Constraint Location [m]
+constraint(1) = constraintClass('A');           % Initialize constraintClass
+    constraint(1).loc = [-0.438 0 0.302];       	% Constraint Location [m]
 
 %% B - Revolute
-constraint(2) = constraintClass('B');       % Initialize constraintClass
+constraint(2) = constraintClass('B');           % Initialize constraintClass
     constraint(2).loc = [-0.438 0 0.714];          	% Constraint Location [m]    
  
 %% Linear Motor
-pto(1) = ptoClass('PTO');                   % Initialize ptoClass
-    pto(1).loc = [-0.438 0 0.714];                     % PTO Location [m]
+pto(1) = ptoClass('PTO');                       % Initialize ptoClass
+    pto(1).loc = [-0.438 0 0.714];                  % PTO Location [m]
     pto(1).orientation.z = [183.4398/379.5826 0 332.3142/379.5823];  % PTO orientation
-% UPDATE pto values, made up for now (Fpto max = 200 N)
-    pto(1).c = 0;
     
 %% C - Revolute
-constraint(3) = constraintClass('C');       % Initialize constraintClass
-    constraint(3).loc = [-0.6214398 0 0.3816858];            % Constraint Location [m]
+constraint(3) = constraintClass('C');           % Initialize constraintClass
+    constraint(3).loc = [-0.6214398 0 0.3816858];	% Constraint Location [m]
 
 %% Frame - Fixed
-constraint(4) = constraintClass('Fixed');   % Initialize constraintClass
-    constraint(4).loc = [-0.43 0 1.5];               % Constraint Location [m]
-
-
-
-
+constraint(4) = constraintClass('Fixed');       % Initialize constraintClass
+    constraint(4).loc = [-0.43 0 1.5];          	% Constraint Location [m]
