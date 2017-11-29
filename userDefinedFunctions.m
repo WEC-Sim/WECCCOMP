@@ -17,6 +17,7 @@ output.plotResponse(1,5);
 plotForces(output,1,5)
 
 %Calculate and plot power 
+%% remove wave ramp from function
 time =  output.ptos.time;
 force = output.ptos.forceActuation(:,3);
 vel = output.ptos.velocity(:,3);
