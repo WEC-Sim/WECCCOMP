@@ -4,6 +4,10 @@ clear power power_eff
 
 %Plot waves
 waves.plotEta(simu.rampTime);
+hold on
+plot([25 25],[-1.5*waves.H,1.5*waves.H])
+legend('\eta','rampTime','powerCalc')
+
 try 
     waves.plotSpectrum();
 catch
@@ -19,8 +23,10 @@ plotForces(output,1,5)
 %Calculate and plot power 
 %% remove wave ramp from function
 time =  output.ptos.time;
-force = output.ptos.forceActuation(:,3);
-vel = output.ptos.velocity(:,3);
+ii = find(time==25);
+time = time(ii:end);
+force = output.ptos.forceActuation(ii:end,3);
+vel = output.ptos.velocity(ii:end,3);
 power = force.*vel;
 eff = 0.7;
 for i = 1:length(power)
