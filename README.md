@@ -2,7 +2,7 @@
 
 **Author:**          Kelley Ruehl (Sandia), Nathan Tom (NREL), Yi-Hsiang Yu (NREL) and Francesco Ferri (Aalborg)
 
-**WEC-Sim Version:** v3.0
+**WEC-Sim Version:** v3.0 (or newer)
 
 **Matlab Version:** 2017a (or newer)
 
@@ -16,7 +16,6 @@ Numerical model for the WEC Control Competition (WECCCOMP) using WEC-Sim to mode
 * write model documentation (KR/NT/Yu) - draft complete
 * test performance metrics w/Controller (NT)
 * run free decay (NT)
-* Check if motor_force input is in the axial direction or only the vertical axis? - note in doc
 * Add TF between WEC-Sim motor force and the controller input (Giorgio)
 
 **Questions?**
