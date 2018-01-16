@@ -20,15 +20,15 @@ simu = simulationClass();                           % Create the Simulation Vari
 % waves = waveClass('noWave');
 %     waves.T = 0.79;
 %% No Wave CIC
-waves = waveClass('noWaveCIC');                     % Initialize waveClass
-    waves.H = 0.0;                                  % Wave Height [m]
-    waves.T = 0.0;                                  % Wave Period [s]
+% waves = waveClass('noWaveCIC');                     % Initialize waveClass
+%     waves.H = 0.0;                                  % Wave Height [m]
+%     waves.T = 0.0;                                  % Wave Period [s]
     
 %% Regular Waves  
-% waves = waveClass('regularCIC');                  % Initialize waveClass
-%     waves.H             = 0.0625;                 % Wave Height [m]
-%     waves.T             = 1.412;                  % Wave Period [s]
-%     waves.wavegaugeloc  = 0.1;
+waves = waveClass('regularCIC');                  % Initialize waveClass
+    waves.H             = 0.0625;                 % Wave Height [m]
+    waves.T             = 1.412;                  % Wave Period [s]
+    waves.wavegaugeloc  = 0.1;
 %% Irregular Waves  
 % waves = waveClass('irregular');                   % Initialize waveClass
 %     waves.H = 0.0625;                             % Wave Height [m]
@@ -44,18 +44,17 @@ body(1) = bodyClass('hydroData/wavestar.h5');       % Initialize bodyClass
     body(1).mass = 3.075;                           % Define mass [kg] - from exp   
     %body(1).mass = 'equilibrium';                 	% Define mass [kg] -> 4.4463 kg  
     body(1).momOfInertia = [0 0.001450 0];          % Moment of Inertia [kg*m^2] - from exp     
-    body(1).geometryFile = 'geometry/FloatArm.stl'; % Geometry File
+    body(1).geometryFile = 'geometry/Float.stl'; % Geometry File
     
 %% Arm - Rotates
 body(2) = bodyClass('');                            % Initialize bodyClass
-    body(2).geometryFile = 'geometry/FloatArm.stl'; % Geometry File
+    body(2).geometryFile = 'geometry/Arm.stl'; % Geometry File
     body(2).nhBody = 1;                             % Turn non-hydro body on
     body(2).name = 'Arm';                           % Specify body name
     body(2).mass = 2.25*1.157;                      % Define mass [kg]   
     body(2).momOfInertia = [0 0.0606 0];            % Moment of Inertia [kg*m^2]     
     body(2).dispVol = 0;                            % Specify Displaced Volume  
     body(2).cg = [-0.3301 0 0.2551];                % Specify Cg 
-    body(2).viz.opacity = 0;
     
 %% Frame - FIXED
 body(3) = bodyClass('');                            % Initialize bodyClass
