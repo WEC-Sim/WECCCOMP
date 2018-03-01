@@ -3,90 +3,90 @@
 %% Simulation Data
 simu = simulationClass();                           % Create the Simulation Variable
     simu.simMechanicsFile = 'WaveStar.slx';         % Specify Simulink Model File       
-    simu.dt = 0.001;                                % Simulation Time-Step [s]
-    simu.rampTime = 5*1.412;                        % Wave Ramp Time Length [s]
-    simu.endTime = 25*1.412;                        % Simulation End Time [s]
-    simu.CITime = 2;                                % Convolution Time [s]
-    simu.explorer = 'on';                           % explorer on
-    simu.solver = 'ode4';                           % turn on ode45
-    simu.domainSize = 5;
-    simu.ssCalc = 1;
-    simu.mcrCaseFile = 'WECCCOMP_ss.mat';
+    simu.dt             = 0.001;                    % Simulation Time-Step [s]
+    simu.rampTime       = 5*1.412;                  % Wave Ramp Time Length [s]
+    simu.endTime        = 100*1.412;                % Simulation End Time [s]
+    simu.CITime         = 2;                        % Convolution Time [s]
+    simu.explorer       = 'on';                     % Explorer on
+    simu.solver         = 'ode4';                   % Turn on ode45
+    simu.domainSize     = 5;
+    simu.ssCalc         = 1;                        % Simulate Impulse Response Function with State Space Approximation
+    simu.mcrCaseFile    = 'WECCCOMP_ss.mat';        % MATLAB File Containing MCR Runs
 
 %% Controller Initialization
-    controller_init
+    controller_init                                 % Initializes the variables in controller_init.m
 %% Wave Information  
 %% No Wave
 % waves = waveClass('noWave');
 %     waves.T = 0.79;
 %% No Wave CIC
-% waves = waveClass('noWaveCIC');                     % Initialize waveClass
-%     waves.H = 0.0;                                  % Wave Height [m]
-%     waves.T = 0.0;                                  % Wave Period [s]
+% waves = waveClass('noWaveCIC');                   % Initialize waveClass
+%     waves.H = 0.0;                                % Wave Height [m]
+%     waves.T = 0.0;                                % Wave Period [s]
     
 %% Regular Waves  
-waves = waveClass('regularCIC');                  % Initialize waveClass
-    waves.H             = 0.0625;                 % Wave Height [m]
-    waves.T             = 1.412;                  % Wave Period [s]
+waves = waveClass('regularCIC');                    % Initialize waveClass
+    waves.H             = 0.0625;                   % Wave Height [m]
+    waves.T             = 1.412;                    % Wave Period [s]
     waves.wavegaugeloc  = 0.1;
 %% Irregular Waves  
-% waves = waveClass('irregular');                   % Initialize waveClass
-%     waves.H = 0.0625;                             % Wave Height [m]
-%     waves.T = 1.412;                            	% Wave Period [s]
-%     waves.spectrumType = 'JS';                    % Specify Wave Spectrum Type
-%     waves.freqDisc = 'EqualEnergy';               % Uses 'EqualEnergy' bins (default) 
-%     waves.phaseSeed = 1;                          % Phase is seeded so eta is the same    
-%     waves.gamma = 1;
+% waves = waveClass('irregular');                     % Initialize waveClass
+%     waves.H             = 0.0625;                   % Wave Height [m]
+%     waves.T             = 1.412;                    % Wave Period [s]
+%     waves.spectrumType  = 'JS';                     % Specify Wave Spectrum Type
+%     waves.freqDisc      = 'EqualEnergy';            % Uses 'EqualEnergy' bins (default) 
+%     waves.phaseSeed     = 1;                        % Phase is seeded so eta is the same    
+%     waves.gamma         = 1;
 %     waves.wavegaugeloc  = 0.1;    
 %% Body Data
 %% Float - 3 DOF
 body(1) = bodyClass('hydroData/wavestar.h5');       % Initialize bodyClass
-    body(1).mass = 3.075;                           % Define mass [kg] - from exp   
-    %body(1).mass = 'equilibrium';                 	% Define mass [kg] -> 4.4463 kg  
-    body(1).momOfInertia = [0 0.001450 0];          % Moment of Inertia [kg*m^2] - from exp     
-    body(1).geometryFile = 'geometry/Float.stl'; % Geometry File
-    
+    body(1).mass            = 3.075;                % Define mass [kg]   
+    body(1).momOfInertia    = [0 0.001450 0];       % Moment of Inertia [kg*m^2]     
+    body(1).geometryFile    = 'geometry/Float.stl'; % Geometry File
+    body(1).linearDamping   = [0 0 0 0 1.8 0];      % Linear Viscous Drag Coefficient
+                                                    % Determined From Experimetnal Tests
 %% Arm - Rotates
 body(2) = bodyClass('');                            % Initialize bodyClass
-    body(2).geometryFile = 'geometry/Arm.stl'; % Geometry File
-    body(2).nhBody = 1;                             % Turn non-hydro body on
-    body(2).name = 'Arm';                           % Specify body name
-    body(2).mass = 2.25*1.157;                      % Define mass [kg]   
-    body(2).momOfInertia = [0 0.0606 0];            % Moment of Inertia [kg*m^2]     
-    body(2).dispVol = 0;                            % Specify Displaced Volume  
-    body(2).cg = [-0.3301 0 0.2551];                % Specify Cg 
+    body(2).geometryFile    = 'geometry/Arm.stl';   % Geometry File
+    body(2).nhBody          = 1;                    % Turn non-hydro body on
+    body(2).name            = 'Arm';                % Specify body name
+    body(2).mass            = 1.157;                % Define mass [kg]   
+    body(2).momOfInertia    = [0 0.0606 0];         % Moment of Inertia [kg*m^2]     
+    body(2).dispVol         = 0;                    % Specify Displaced Volume  
+    body(2).cg              = [-0.3301 0 0.2551];   % Specify Cg 
     
 %% Frame - FIXED
 body(3) = bodyClass('');                            % Initialize bodyClass
-    body(3).geometryFile = 'geometry/Frame.stl'; 	% Geometry File
-    body(3).nhBody = 1;                             % Turn non-hydro body on
-    body(3).name = 'Frame';                         % Specify body name
-    body(3).mass = 999;                            	% Define mass [kg] - FIXED  
-    body(3).momOfInertia = [999 999 999];           % Moment of Inertia [kg*m^2] - FIXED 
-    body(3).dispVol = 0;                            % Specify Displaced Volume  
-    body(3).viz.color = [0 0 0];
-    body(3).viz.opacity = 0.5;
-    body(3).cg = [0 0 0];                           % Specify Cg 
+    body(3).geometryFile    = 'geometry/Frame.stl'; % Geometry File
+    body(3).nhBody          = 1;                    % Turn non-hydro body on
+    body(3).name            = 'Frame';              % Specify body name
+    body(3).mass            = 999;                  % Define mass [kg] - FIXED  
+    body(3).momOfInertia    = [999 999 999];        % Moment of Inertia [kg*m^2] - FIXED 
+    body(3).dispVol         = 0;                    % Specify Displaced Volume  
+    body(3).viz.color       = [0 0 0];
+    body(3).viz.opacity     = 0.5;
+    body(3).cg              = [0 0 0];              % Specify Cg 
 
 %% BC Rod - TRANSLATE
 body(4) = bodyClass('');                            % Initialize bodyClass
-    body(4).geometryFile = 'geometry/BC.stl';       % Geometry File
-    body(4).nhBody = 1;                             % Turn non-hydro body on
-    body(4).name = 'BC';                            % Specify body name
-    body(4).mass = 0.0001;                          % Define mass [kg]   
-    body(4).momOfInertia = [0.0001 0.0001 0.0001];  % Moment of Inertia [kg*m^2]      
-    body(4).dispVol = 0;                            % Specify Displaced Volume  
-    body(4).cg = [0 0 0];                           % Specify Cg 
+    body(4).geometryFile    = 'geometry/BC.stl';    % Geometry File
+    body(4).nhBody          = 1;                    % Turn non-hydro body on
+    body(4).name            = 'BC';                 % Specify body name
+    body(4).mass            = 0.0001;               % Define mass [kg]   
+    body(4).momOfInertia    = [0.0001 0.0001 0.0001]; % Moment of Inertia [kg*m^2]      
+    body(4).dispVol         = 0;                    % Specify Displaced Volume  
+    body(4).cg              = [0 0 0];              % Specify Cg 
     
 %% Motor - ROTATE
 body(5) = bodyClass('');                            % Initialize bodyClass
-    body(5).geometryFile = 'geometry/Motor.stl'; 	% Geometry File
-    body(5).nhBody = 1;                             % Turn non-hydro body on
-    body(5).name = 'Motor';                         % Specify body name
-    body(5).mass = 0.0001;                          % Define mass [kg]   
-    body(5).momOfInertia = [0.0001 0.0001 0.0001];  % Moment of Inertia [kg*m^2]     
-    body(5).dispVol = 0;                            % Specify Displaced Volume  
-    body(5).cg = [0 0 0];                           % Specify Cg 
+    body(5).geometryFile    = 'geometry/Motor.stl'; % Geometry File
+    body(5).nhBody          = 1;                    % Turn non-hydro body on
+    body(5).name            = 'Motor';              % Specify body name
+    body(5).mass            = 0.0001;               % Define mass [kg]   
+    body(5).momOfInertia    = [0.0001 0.0001 0.0001]; % Moment of Inertia [kg*m^2]     
+    body(5).dispVol         = 0;                    % Specify Displaced Volume  
+    body(5).cg              = [0 0 0];              % Specify Cg 
 
 %% PTO and Constraint Parameters
 %% Rigid Connnection between Arm and Float
