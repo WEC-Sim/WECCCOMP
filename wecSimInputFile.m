@@ -1,6 +1,6 @@
 %% WaveStar model with WAMIT data for WECCCOMP
 %
-%% Simulation Data
+%% Simulation Class
 simu = simulationClass();                           % Create the Simulation Variable
     simu.simMechanicsFile = 'WaveStar.slx';         % Specify Simulink Model File       
     simu.dt             = 0.001;                    % Simulation Time-Step [s]
@@ -15,7 +15,7 @@ simu = simulationClass();                           % Create the Simulation Vari
 
 %% Controller Initialization
     controller_init                                 % Initializes the variables in controller_init.m
-%% Wave Information  
+%% Wave Class  
 %% No Wave
 % waves = waveClass('noWave');
 %     waves.T = 0.79;
@@ -25,24 +25,24 @@ simu = simulationClass();                           % Create the Simulation Vari
 %     waves.T = 0.0;                                % Wave Period [s]
     
 %% Regular Waves  
-waves = waveClass('regularCIC');                    % Initialize waveClass
+% waves = waveClass('regularCIC');                    % Initialize waveClass
+%     waves.H             = 0.0625;                   % Wave Height [m]
+%     waves.T             = 1.412;                    % Wave Period [s]
+%     waves.wavegauge1loc = [-1.70, 0];                      % Wave Gauge 1 x-location
+%     waves.wavegauge2loc = [-1.50, 0];                      % Wave Gauge 2 x-location
+%     waves.wavegauge3loc = [-1.25, 0];                      % Wave Gauge 3 x-location
+%% Irregular Waves  
+waves = waveClass('irregular');                     % Initialize waveClass
     waves.H             = 0.0625;                   % Wave Height [m]
     waves.T             = 1.412;                    % Wave Period [s]
+    waves.spectrumType  = 'JS';                     % Specify Wave Spectrum Type
+    waves.freqDisc      = 'EqualEnergy';            % Uses 'EqualEnergy' bins (default) 
+    waves.phaseSeed     = 1;                        % Phase is seeded so eta is the same    
+    waves.gamma         = 1;
     waves.wavegauge1loc = [-1.70, 0];                      % Wave Gauge 1 x-location
     waves.wavegauge2loc = [-1.50, 0];                      % Wave Gauge 2 x-location
     waves.wavegauge3loc = [-1.25, 0];                      % Wave Gauge 3 x-location
-%% Irregular Waves  
-% waves = waveClass('irregular');                     % Initialize waveClass
-%     waves.H             = 0.0625;                   % Wave Height [m]
-%     waves.T             = 1.412;                    % Wave Period [s]
-%     waves.spectrumType  = 'JS';                     % Specify Wave Spectrum Type
-%     waves.freqDisc      = 'EqualEnergy';            % Uses 'EqualEnergy' bins (default) 
-%     waves.phaseSeed     = 1;                        % Phase is seeded so eta is the same    
-%     waves.gamma         = 1;
-%     waves.wavegauge1loc = -1.70;                      % Wave Gauge 1 x-location
-%     waves.wavegauge2loc = -1.50;                      % Wave Gauge 2 x-location
-%     waves.wavegauge3loc = -1.25;                      % Wave Gauge 3 x-location
-%% Body Data
+%% Body Class
 %% Float - 3 DOF
 body(1) = bodyClass('hydroData/wavestar.h5');       % Initialize bodyClass
     body(1).mass                = 3.075;                % Define mass [kg]   
@@ -97,7 +97,7 @@ body(5) = bodyClass('');                            % Initialize bodyClass
     body(5).cg              = [0 0 0];              % Specify Cg
     body(5).cb              = [0 0 0];              % Specify Cb
 
-%% PTO and Constraint Parameters
+%% PTO and Constraint Class
 %% Rigid Connnection between Arm and Float
 constraint(1) = constraintClass('Arm-Float');       % Initialize constraintClass
     constraint(1).loc = [0 0 0.09];                 % Constraint Location [m]
