@@ -1,5 +1,6 @@
-%% WaveStar model with WAMIT data for WECCCOMP
-%
+%% WECCCOMP model of WaveStar device with WAMIT data 
+% https://github.com/WEC-Sim/WECCCOMP
+
 %% Simulation Class
 simu = simulationClass();                           % Create the Simulation Variable
     simu.simMechanicsFile = 'WaveStar.slx';         % Specify Simulink Model File       

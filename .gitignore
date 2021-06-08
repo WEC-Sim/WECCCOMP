@@ -45,6 +45,7 @@ $ cat .gitignore
 *.png
 *.r2015b
 *.slx.r2015b
+*.slx.r2017b
 *.slxc
 *.sublime-workspace
 *.sublime-project

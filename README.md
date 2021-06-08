@@ -2,9 +2,9 @@
 
 **Author:**          Kelley Ruehl (Sandia), Nathan Tom (NREL), Yi-Hsiang Yu (NREL) and Francesco Ferri (Aalborg)
 
-**WEC-Sim Version:** v3.0 (or newer)
+**WEC-Sim Version:** v4.2 (or newer)
 
-**Matlab Version:** 2017a (or newer)
+**Matlab Version:** 2019b (or newer)
 
 **WEC-Sim Model**
 Numerical model for the WEC Control Competition (WECCCOMP) using WEC-Sim to model the WaveStar.
