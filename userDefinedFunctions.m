@@ -52,9 +52,9 @@ legend('power','power w/eff')
 pto_force = output.ptos.forceInternalMechanics(ii:end,3);
 pto_displacement = output.ptos.position(ii:end,3);
 
-f_98 = prctile(abs(pto_force),98);
+% f_98 = prctile(abs(pto_force),98);
 f_max = 60;
-z_98 = prctile(abs(pto_displacement),98);
+% z_98 = prctile(abs(pto_displacement),98);
 z_max = 0.08;
 power_average = mean(power_eff);
 power_abs_average = mean(abs(power_eff));
