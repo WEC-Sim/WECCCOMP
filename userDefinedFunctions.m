@@ -58,7 +58,7 @@ f_max = 60;
 z_max = 0.08;
 power_average = mean(power_eff);
 power_abs_average = mean(abs(power_eff));
-P98 = prctile(abs(power_eff),98);
+% P98 = prctile(abs(power_eff),98);
 
-EC = power_average/(2 + f_98/f_max + z_98/z_max - power_abs_average/P98);
+% EC = power_average/(2 + f_98/f_max + z_98/z_max - power_abs_average/P98);
 
