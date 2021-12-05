@@ -1,7 +1,7 @@
 %% WECCCOMP model of WaveStar device with WAMIT data 
 % https://github.com/WEC-Sim/WECCCOMP
 %Select the Sea State to simulate
-SeaState = 6;
+SeaState = 4;
 switch(SeaState)
     case 1 ;        Hm0=0.0208;        Tp=0.988;        gamma=1.0;
     case 2 ;        Hm0=0.0625;        Tp=1.412;        gamma=1.0;
@@ -14,14 +14,10 @@ end
 
 %% Simulation Class
 simu = simulationClass();                           % Create the Simulation Variable
-    simu.simMechanicsFile = 'WaveStar.slx';         % Specify Simulink Model File       
+    simu.simMechanicsFile = 'WaveStarFixedA.slx';         % Specify Simulink Model File       
     simu.dt             = 10/1000;                  % Simulation Time-Step [s]
     simu.rampTime       = 25;                       % Wave Ramp Time Length [s]
-    switch(SeaState)
-        case 4;        simu.endTime        = 100;
-        case 5;        simu.endTime        = 150;
-        case 6;        simu.endTime        = 200;
-    end
+    simu.endTime        = 300;
     simu.CITime         = 2;                        % Convolution Time [s]
     simu.explorer       = 'off';                     % Explorer on
     simu.solver         = 'ode4';                   % Turn on ode45
@@ -29,14 +25,15 @@ simu = simulationClass();                           % Create the Simulation Vari
     simu.ssCalc         = 1;                        % Simulate Impulse Response Function with State Space Approximation
     simu.g=9.81;
     simu.rho=1000;
-    simu.mcrCaseFile    = 'simulationData/WECCCOMP_ss.mat';        % MATLAB File Containing MCR Runs
+    simu.mcrCaseFile    = 'WECCCOMP_ss.mat';        % MATLAB File Containing MCR Runs
 
 %% Controller Initialization
     controller_init;                                 % Initializes the variables in controller_init.m
 %% Wave Class  
 %%%%%%%%%%%%%%%%%%%% No Wave   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% waves = waveClass('noWave');
-%     waves.T = 0.79;
+% % % waves = waveClass('noWave');
+% % %     waves.T = Tp;
+% % %     waves.H = Hm0;
 
 %%%%%%%%%%%%%%%%%%%% No Wave CIC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % waves = waveClass('noWaveCIC');                   % Initialize waveClass
@@ -51,26 +48,21 @@ simu = simulationClass();                           % Create the Simulation Vari
 %     waves.wavegauge2loc = [-1.50, 0];                      % Wave Gauge 2 x-location
 %     waves.wavegauge3loc = [-1.25, 0];                      % Wave Gauge 3 x-location
 
-%%%%%%%%%%%%%%%%%%%% Irregular Waves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % % % % %     waves = waveClass('irregular');                     % Initialize waveClass
-% % % % % %     waves.H             = Hm0;                   % Wave Height [m]
-% % % % % %     waves.T             = Tp;                    % Wave Period [s]
-% % % % % %     waves.spectrumType  = 'JS';                     % Specify Wave Spectrum Type
-% % % % % %     waves.freqDisc      = 'EqualEnergy';            % Uses 'EqualEnergy' bins (default) 
-% % % % % %     waves.gamma         = gamma;
-% % % % % %     waves.phaseSeed     = 1;                        % Phase is seeded so eta is the same    
+% %%%%%%%%%%%%%%%%%%%% Irregular Waves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    waves = waveClass('irregular');                     % Initialize waveClass
+    waves.H             = Hm0;                   % Wave Height [m]
+    waves.T             = Tp;                    % Wave Period [s]
+    waves.spectrumType  = 'JS';                     % Specify Wave Spectrum Type
+    waves.freqDisc      = 'EqualEnergy';            % Uses 'EqualEnergy' bins (default) 
+    waves.gamma         = gamma;
+    waves.phaseSeed     = 1;                        % Phase is seeded so eta is the same    
 %     waves.wavegauge1loc = [-1.70, 0];                      % Wave Gauge 1 x-location
 %     waves.wavegauge2loc = [-1.50, 0];                      % Wave Gauge 2 x-location
 %     waves.wavegauge3loc = [-1.25, 0];                      % Wave Gauge 3 x-location
 
 %%%%%%%%%%%%%%%%%%% Custom Wave Elevation (eta) Import %%%%%%%%%%%%%%%%%%
-waves = waveClass('etaImport');
-switch(SeaState)
-    case 4;        waves.etaDataFile = 'simulationData/wave4.mat';
-    case 5;        waves.etaDataFile = 'simulationData/wave5.mat';
-    case 6;        waves.etaDataFile = 'simulationData/wave6.mat';
-    otherwise;     disp('No wave data available');      return;
-end
+% waves = waveClass('etaImport');
+% waves.etaDataFile = 'wave4.mat';
 %% Body Class
 %%%%%%%%%%%%%%%%%%% Float - 3 DOF   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 body(1) = bodyClass('hydroData/wavestar.h5');       % Initialize bodyClass
@@ -80,6 +72,7 @@ body(1) = bodyClass('hydroData/wavestar.h5');       % Initialize bodyClass
     body(1).linearDamping       = zeros(6);      % Linear Viscous Drag Coefficient
     body(1).linearDamping(5,5)  = 1.8;      % Linear Viscous Drag Coefficient
                                                     % Determined From Experimetnal Tests
+                                                    
 %%%%%%%%%%%%%%%%%%% Arm - Rotates   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 body(2) = bodyClass('');                            % Initialize bodyClass
     body(2).geometryFile    = 'geometry/Arm.stl';   % Geometry File
@@ -131,8 +124,8 @@ body(5) = bodyClass('');                            % Initialize bodyClass
 constraint(1) = constraintClass('Arm-Float');       % Initialize constraintClass
     constraint(1).loc = [0 0 0.09];                 % Constraint Location [m]
     
-%%%%%%%%%%%%%%%%%%% A - Revolute    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-constraint(2) = constraintClass('A');               % Initialize constraintClass
+%%%%%%%%%%%%%%%%%%% A - FIXED    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+constraint(2) = constraintClass('Fixed-Point-A');   % Initialize constraintClass
     constraint(2).loc = [-0.438 0 0.302];           % Constraint Location [m]
 
 %%%%%%%%%%%%%%%%%%% B - Revolute    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -152,4 +145,3 @@ pto(1) = ptoClass('PTO');                           % Initialize ptoClass
 %%%%%%%%%%%%%%%%%%% Frame - Fixed    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 constraint(5) = constraintClass('Fixed');           % Initialize constraintClass
     constraint(5).loc = [-0.438 0 1.5];             % Constraint Location [m]
-    

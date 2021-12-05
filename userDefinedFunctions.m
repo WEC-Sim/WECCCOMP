@@ -27,10 +27,10 @@ xlim([0 inf])
 time =  output.ptos.time;
 ii = find(time==25);
 time = time(ii:end);
-% force = -output.ptos.forceActuation(ii:end,3);
-% vel = output.ptos.velocity(ii:end,3);
-% power = force.*vel;
-power = output.ptos.powerInternalMechanics(ii:end,3);
+force = -output.ptos.forceActuation(ii:end,3);
+vel = output.ptos.velocity(ii:end,3);
+power = force.*vel;
+% power = output.ptos.powerInternalMechanics(ii:end,3);
 eff = 0.7;
 for i = 1:length(power)
     if power(i)>= 0
@@ -61,4 +61,41 @@ power_abs_average = mean(abs(power_eff));
 % P98 = prctile(abs(power_eff),98);
 
 % EC = power_average/(2 + f_98/f_max + z_98/z_max - power_abs_average/P98);
+
+%%
+figure('Name','Excitation moment using wecSim-calculation and KF-estimation','Units','Normalized','OuterPosition', [0 0 1 1] );
+plot(computedExMoment.time,computedExMoment.signals.values,'k-');  hold on;   grid on;    grid minor;  box on;
+estimated_exMoment = squeeze(estimated_states.signals.values(5,1,:));
+plot(estimated_states.time,estimated_exMoment, 'r.')
+
+
+figure('Name','Arm Position using wecSim-calculation and KF-estimation','Units','Normalized','OuterPosition', [0 0 1 1] );
+plot(motor_pos_rot.time,motor_pos_rot.signals.values,'k-');  hold on;   grid on;    grid minor;  box on;
+estimated_armposition = squeeze(estimated_states.signals.values(1,1,:));
+plot(estimated_states.time,estimated_armposition, 'r.')
+
+
+figure('Name','Arm Velocity using wecSim-calculation and KF-estimation','Units','Normalized','OuterPosition', [0 0 1 1] );
+plot(motor_vel_rot.time,motor_vel_rot.signals.values,'k-');  hold on;   grid on;    grid minor;  box on;
+estimated_armvelocity = squeeze(estimated_states.signals.values(2,1,:));
+plot(estimated_states.time,estimated_armvelocity, 'r.')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
