@@ -1,6 +1,7 @@
 $ cat .gitignore
 
 # File Types
+git_commands.txt
 *~
 *.acn
 *.acr

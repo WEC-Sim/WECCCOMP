@@ -17,17 +17,18 @@ simu = simulationClass();                           % Create the Simulation Vari
     simu.simMechanicsFile = 'WaveStar.slx';         % Specify Simulink Model File       
     simu.dt             = 10/1000;                  % Simulation Time-Step [s]
     simu.rampTime       = 25;                       % Wave Ramp Time Length [s]
-    switch(SeaState)
-        case 4;        simu.endTime        = 100;
-        case 5;        simu.endTime        = 150;
-        case 6;        simu.endTime        = 200;
-    end
+    simu.endTime        = 200;
+% % % %     switch(SeaState)
+% % % %         case 4;        simu.endTime        = 100;
+% % % %         case 5;        simu.endTime        = 150;
+% % % %         case 6;        simu.endTime        = 200;
+% % % %     end
     simu.CITime         = 2;                        % Convolution Time [s]
     simu.explorer       = 'off';                     % Explorer on
     simu.solver         = 'ode4';                   % Turn on ode45
     simu.domainSize     = 5;
     simu.ssCalc         = 1;                        % Simulate Impulse Response Function with State Space Approximation
-    simu.g=9.81;
+    simu.g = 9.80665;
     simu.rho=1000;
     simu.mcrCaseFile    = 'simulationData/WECCCOMP_ss.mat';        % MATLAB File Containing MCR Runs
 
@@ -45,32 +46,33 @@ simu = simulationClass();                           % Create the Simulation Vari
     
 %%%%%%%%%%%%%%%%%%%% Rregular Waves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % waves = waveClass('regularCIC');                    % Initialize waveClass
-%     waves.H             = 0.0625;                   % Wave Height [m]
-%     waves.T             = 1.412;                    % Wave Period [s]
+%     waves.H             = Hm0;                   % Wave Height [m]
+%     waves.T             = Tp;                    % Wave Period [s]
 %     waves.wavegauge1loc = [-1.70, 0];                      % Wave Gauge 1 x-location
 %     waves.wavegauge2loc = [-1.50, 0];                      % Wave Gauge 2 x-location
 %     waves.wavegauge3loc = [-1.25, 0];                      % Wave Gauge 3 x-location
 
 %%%%%%%%%%%%%%%%%%%% Irregular Waves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % % % % %     waves = waveClass('irregular');                     % Initialize waveClass
-% % % % % %     waves.H             = Hm0;                   % Wave Height [m]
-% % % % % %     waves.T             = Tp;                    % Wave Period [s]
-% % % % % %     waves.spectrumType  = 'JS';                     % Specify Wave Spectrum Type
-% % % % % %     waves.freqDisc      = 'EqualEnergy';            % Uses 'EqualEnergy' bins (default) 
-% % % % % %     waves.gamma         = gamma;
-% % % % % %     waves.phaseSeed     = 1;                        % Phase is seeded so eta is the same    
+    waves = waveClass('irregular');                     % Initialize waveClass
+    waves.H             = Hm0;                   % Wave Height [m]
+    waves.T             = Tp;                    % Wave Period [s]
+    waves.spectrumType  = 'JS';                     % Specify Wave Spectrum Type
+    waves.freqDisc      = 'EqualEnergy';            % Uses 'EqualEnergy' bins (default) 
+    waves.gamma         = gamma;
+    waves.phaseSeed     = 1;                        % Phase is seeded so eta is the same    
 %     waves.wavegauge1loc = [-1.70, 0];                      % Wave Gauge 1 x-location
 %     waves.wavegauge2loc = [-1.50, 0];                      % Wave Gauge 2 x-location
 %     waves.wavegauge3loc = [-1.25, 0];                      % Wave Gauge 3 x-location
 
 %%%%%%%%%%%%%%%%%%% Custom Wave Elevation (eta) Import %%%%%%%%%%%%%%%%%%
-waves = waveClass('etaImport');
-switch(SeaState)
-    case 4;        waves.etaDataFile = 'simulationData/wave4.mat';
-    case 5;        waves.etaDataFile = 'simulationData/wave5.mat';
-    case 6;        waves.etaDataFile = 'simulationData/wave6.mat';
-    otherwise;     disp('No wave data available');      return;
-end
+% waves = waveClass('etaImport');
+% switch(SeaState)
+%     case 4;        waves.etaDataFile = 'simulationData/wave4.mat';
+%     case 5;        waves.etaDataFile = 'simulationData/wave5.mat';
+%     case 6;        waves.etaDataFile = 'simulationData/wave6.mat';
+%     otherwise;     disp('No wave data available');      return;
+% end
+
 %% Body Class
 %%%%%%%%%%%%%%%%%%% Float - 3 DOF   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 body(1) = bodyClass('hydroData/wavestar.h5');       % Initialize bodyClass
