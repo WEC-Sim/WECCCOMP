@@ -1,5 +1,6 @@
 % Kinematic values
 close all; clc;
+load('./output/WaveStar_matlabWorkspace.mat')
 time            = output.bodies( 1 ).time;
 position        = ( output.bodies( 1 ).position.' - [ body(1).cg; 0; 0; 0 ] );     %zero the position so position vector starts at [0,0,0,0,0,0]
 velocity        = output.bodies( 1 ).velocity;

@@ -1,7 +1,6 @@
 $ cat .gitignore
 
 # File Types
-git_commands.txt
 *~
 *.acn
 *.acr
@@ -61,8 +60,6 @@ git_commands.txt
 **/output/
 **/slprj/
 *build_exception*
-*.mat
-!WECCCOMP_ss.mat
 
 # Other
 .DS_Store

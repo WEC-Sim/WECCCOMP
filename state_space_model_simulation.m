@@ -1,32 +1,17 @@
 %% Simulation of the waveStar using the state space model
+close all; clc;
 load('./output/WaveStar_matlabWorkspace.mat')
 controller_init();
-dt=mean(diff(time));                %Sampling time
-% %%%%%% State Space Matrices for the Linear system %%%%%%%%%%%%%%%%%%%%%%%
-Ac = [0,1,0,0;
-     -Khs./Jt, -(Dr+bv)./Jt, -Cr./Jt;
-     [0;0],Br,Ar];      
-Bc = [0;1/Jt;0;0];                                                                                                                      
-Cc = [1,0,0,0;0,1,0,0];
-Dc = [0;0];
-
-%Form State Space
-sysC = ss(Ac,Bc,Cc,Dc);             %Declares Continuous State Space
-%Discretize using ZOH
-sysD = c2d(sysC,dt,'zoh');          %Declares discrete State Space
-
-% WEC discrete Model System
-Ad = sysD.A;                        %Discrete State Transition Matrix
-Bd = sysD.B;                        %Discrete Input To State Matrix
-Cd = sysD.C;                        %Discrete Output Matrix
-Dd = sysD.D;                        %Discreete Input To Output Matrix
-nx=size(Ad,1);                      %Number of States  
-nu=size(Bd,2);                      %Number of Inputs  
-ny=size(Cd,1);                      %Number of Outputs
+dt=mean(diff(output.wave.time));                %Sampling time
+time            = output.bodies( 1 ).time;
+positionArm     = output.bodies( 2 ).position;
+velocityArm     = output.bodies( 2 ).velocity;
+accelerationArm = output.bodies( 2 ).acceleration;
+excM = computedExMoment.signals.values;
 
 %%%%%% Simulation %%%%%%%%%%%%%%%%%%%%%%%
-Time=time(end);
-kT=round(Time/dt);                  %Number of simulation steps
+finalTime = time(end);
+kT=round(finalTime/dt);                  %Number of simulation steps
 %Preallocation 
 Xk=zeros(nx,kT);                    %Matrix to store the state values from the simulation
 Uk=zeros(nu,kT);                    %Matrix to store the input values from the simulation

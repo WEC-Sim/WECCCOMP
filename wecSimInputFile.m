@@ -53,25 +53,25 @@ simu = simulationClass();                           % Create the Simulation Vari
 %     waves.wavegauge3loc = [-1.25, 0];                      % Wave Gauge 3 x-location
 
 %%%%%%%%%%%%%%%%%%%% Irregular Waves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    waves = waveClass('irregular');                     % Initialize waveClass
-    waves.H             = Hm0;                   % Wave Height [m]
-    waves.T             = Tp;                    % Wave Period [s]
-    waves.spectrumType  = 'JS';                     % Specify Wave Spectrum Type
-    waves.freqDisc      = 'EqualEnergy';            % Uses 'EqualEnergy' bins (default) 
-    waves.gamma         = gamma;
-    waves.phaseSeed     = 1;                        % Phase is seeded so eta is the same    
+%     waves = waveClass('irregular');                     % Initialize waveClass
+%     waves.H             = Hm0;                   % Wave Height [m]
+%     waves.T             = Tp;                    % Wave Period [s]
+%     waves.spectrumType  = 'JS';                     % Specify Wave Spectrum Type
+%     waves.freqDisc      = 'EqualEnergy';            % Uses 'EqualEnergy' bins (default) 
+%     waves.gamma         = gamma;
+%     waves.phaseSeed     = 1;                        % Phase is seeded so eta is the same    
 %     waves.wavegauge1loc = [-1.70, 0];                      % Wave Gauge 1 x-location
 %     waves.wavegauge2loc = [-1.50, 0];                      % Wave Gauge 2 x-location
 %     waves.wavegauge3loc = [-1.25, 0];                      % Wave Gauge 3 x-location
 
 %%%%%%%%%%%%%%%%%%% Custom Wave Elevation (eta) Import %%%%%%%%%%%%%%%%%%
-% waves = waveClass('etaImport');
-% switch(SeaState)
-%     case 4;        waves.etaDataFile = 'simulationData/wave4.mat';
-%     case 5;        waves.etaDataFile = 'simulationData/wave5.mat';
-%     case 6;        waves.etaDataFile = 'simulationData/wave6.mat';
-%     otherwise;     disp('No wave data available');      return;
-% end
+waves = waveClass('etaImport');
+switch(SeaState)
+    case 4;        waves.etaDataFile = 'wave4.mat';
+    case 5;        waves.etaDataFile = 'wave5.mat';
+    case 6;        waves.etaDataFile = 'wave6.mat';
+    otherwise;     disp('No wave data available');      return;
+end
 
 %% Body Class
 %%%%%%%%%%%%%%%%%%% Float - 3 DOF   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

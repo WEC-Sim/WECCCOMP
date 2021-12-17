@@ -3,12 +3,17 @@
 % Mexc= -excForce_x * LAfloat * sin( actualPosition + initialPosition ) - excForce_z * LAfloat * cos( actualPosition + initialPosition ) + excM,pitch
 % Mrad= -radForce_x * LAfloat * sin( actualPosition + initialPosition ) - radForce_z * LAfloat * cos( actualPosition + initialPosition ) + radM,pitch
 % Mres= -resForce_x * LAfloat * sin( actualPosition + initialPosition ) - resForce_z * LAfloat * cos( actualPosition + initialPosition ) + resM,pitch
+close all; clc;
 controller_init();
 load('./output/WaveStar_matlabWorkspace.mat')
+timePlot        = output.bodies( 1 ).time;
+dt              = mean(diff(timePlot));                %Sampling time
+positionArm     = output.bodies( 2 ).position;
+velocityArm     = output.bodies( 2 ).velocity;
+accelerationArm = output.bodies( 2 ).acceleration;
+% excM = computedExMoment.signals.values;
 ti          = find(output.wave.time==30);
 tf          = find(output.wave.time==35);
-timePlot    = output.wave.time;
-dt          = mean(diff(timePlot));                %Sampling time
 
 % Kinematics
 theta   = output.bodies( 2 ).position( :, 5 );
@@ -36,7 +41,7 @@ radM = -xFrad .* LAfloat .* sin( Theta0 + theta ) - zFrad .* LAfloat .* cos( The
 resM = -xFres .* LAfloat .* sin( Theta0 + theta ) - zFres .* LAfloat .* cos( Theta0 + theta ) + pitchMres ;   % Restoring moment
 
 time = timePlot;
-save('Moments6.mat',"time","dt","theta","Dtheta","excM","radM","resM",'-mat')
+% save('Moments6.mat',"time","dt","theta","Dtheta","excM","radM","resM",'-mat')
 timePlot = time;
 % Plots
 plotforces = 0;

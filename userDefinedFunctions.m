@@ -23,12 +23,12 @@ xlim([0 inf])
 
 %% Calculate and Plot Power 
 figure('Name','Extracted "raw" Energy Power','Units','Normalized','OuterPosition', [0 0 1 1] );
-plot(Output_energy.time,-Output_energy.signals.values,'k-');  hold on;   grid on;    grid minor;  box on;
+plot(Output_energy.time,Output_energy.signals.values,'k-');  hold on;   grid on;    grid minor;  box on;
 xlabel('Time (s)')
 ylabel('Energy (J)')
 
 figure('Name','Output Power','Units','Normalized','OuterPosition', [0 0 1 1] );
-plot(Output_power.time,-Output_power.signals.values,'k-');  hold on;   grid on;    grid minor;  box on;
+plot(Output_power.time,Output_power.signals.values,'k-');  hold on;   grid on;    grid minor;  box on;
 xlim([25 inf])
 xlabel('Time (s)')
 ylabel('Power (W)')
@@ -52,19 +52,28 @@ title(['body' num2str(1) ' (' output.bodies(1).name ') Power'])
 %% Plot Excitation moment, Arm Position and Arm Velocity using wecSim-calculation and KF-estimation
 figure('Name','Excitation moment using wecSim-calculation and KF-estimation','Units','Normalized','OuterPosition', [0 0 1 1] );
 plot(computedExMoment.time,computedExMoment.signals.values,'k-');  hold on;   grid on;    grid minor;  box on;
-estimated_exMoment = squeeze(estimated_states.signals.values(5,1,:));
-plot(estimated_states.time,estimated_exMoment, 'r.')
+estimated_exMoment = squeeze(estimated_states.signals.values(:,5));
+plot(estimated_states.time,estimated_exMoment, 'r--')
+legend('Computed', 'Estimated')
+excitationWave_GoF = goodnessOfFit(computedExMoment.signals.values,estimated_exMoment,'NRMSE')
+txt = ['excitation moment GoF = ',num2str(excitationWave_GoF)];
+text(20, -15 ,txt,'Color','red','FontSize',14)
 
 
 figure('Name','Arm Position using wecSim-calculation and KF-estimation','Units','Normalized','OuterPosition', [0 0 1 1] );
 plot(motor_pos_rot.time,motor_pos_rot.signals.values,'k-');  hold on;   grid on;    grid minor;  box on;
-estimated_armposition = squeeze(estimated_states.signals.values(1,1,:));
-plot(estimated_states.time,estimated_armposition, 'r.')
-
+estimated_armposition = squeeze(estimated_states.signals.values(:,1));
+plot(estimated_states.time,estimated_armposition, 'r--')
+legend('Computed', 'Estimated')
+armPosition_GoF = goodnessOfFit(motor_pos_rot.signals.values,estimated_armposition,'NRMSE')
+txt = ['Arm position GoF = ',num2str(armPosition_GoF)];
+text(20, -0.1 ,txt,'Color','red','FontSize',14)
 
 figure('Name','Arm Velocity using wecSim-calculation and KF-estimation','Units','Normalized','OuterPosition', [0 0 1 1] );
 plot(motor_vel_rot.time,motor_vel_rot.signals.values,'k-');  hold on;   grid on;    grid minor;  box on;
-estimated_armvelocity = squeeze(estimated_states.signals.values(2,1,:));
-plot(estimated_states.time,estimated_armvelocity, 'r.')
-
-
+estimated_armvelocity = squeeze(estimated_states.signals.values(:,2));
+plot(estimated_states.time,estimated_armvelocity, 'r--')
+legend('Computed', 'Estimated')
+armVelocity_GoF = goodnessOfFit(motor_vel_rot.signals.values,estimated_armvelocity,'NRMSE')
+txt = ['Arm position GoF = ',num2str(armVelocity_GoF)];
+text(20, -0.5 ,txt,'Color','red','FontSize',14)

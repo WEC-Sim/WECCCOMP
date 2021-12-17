@@ -1,6 +1,7 @@
 % This file compares the motor rotational position with the angular
 % position of the Arm. it does the same for the velocity.
-
+close all; clc;
+load('./output/WaveStar_matlabWorkspace.mat')
 time = output.bodies( 1 ).time;
 positionArm = output.bodies( 2 ).position;
 velocityArm = output.bodies( 2 ).velocity;
