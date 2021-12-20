@@ -1,9 +1,9 @@
 % init file for the WecSim model of the Wavestart arm
 close all; clc;
-clear observer_kf ; %To clear the persistent variables defined in the function observer_kf
-clear extrPower ;   %To clear the persistent variables defined in the function extrPower
-clear RTI_NMPC;     %To clear the persistent variables defined in the function RTI_NMPC
-clear Simu_Linearise
+clear observer_kf() ; %To clear the persistent variables defined in the function observer_kf
+clear extrPower() ;   %To clear the persistent variables defined in the function extrPower
+clear NMPC();     %To clear the persistent variables defined in the function RTI_NMPC
+
 McSat = 12;
 if exist("simu.dt","var")
     xPcTs = simu.dt;
@@ -28,7 +28,7 @@ bv              = 1.8;                    % Linear damping coefficient [N m (rad
 % load('radM_matrices42.mat')                 % Load state-space model matrices for the radiation moment around point A.
 % load('radM_matrices52.mat')                 % Load state-space model matrices for the radiation moment around point A.
 % load('radM_matrices62.mat')                 % Load state-space model matrices for the radiation moment around point A.
-load('radM_matrices_WECCCOMP.mat')                 % Load state-space model matrices for the radiation moment around point A.
+load('./waveData/radM_matrices_WECCCOMP.mat')                 % Load state-space model matrices for the radiation moment around point A.
 
 nx_radM = size(Ar,2);
 
@@ -50,8 +50,6 @@ Dd      = sysD.D;                           %Discreete Input To Output Matrix
 nx      = size(Ad,1);                       %Number of States  
 nu      = size(Bd,2);                       %Number of Inputs  
 ny      = size(Cd,1);                       %Number of Outputs
-
-clear Ac Bc Cc Dc sysC sysD
 
 r_Acc   = 0.464;                            % "Moment arm" for accelerometer
 Theta0  = deg2rad(26.9527);                 % Inclination of accelerometer at neutral [rad], 23.4881deg used in WECCCOMP
@@ -78,13 +76,14 @@ r       = chol( Rkf, 'lower' );
 
 %%%%%%%%%%% Controller information    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Resistive controller ===> Proportional to the arm angular velocity.
+controllerType = 1; % 1 for proportional, 2 for 'NMPC'; 
 switch(SeaState)
-    case 4 ;        cc = 5.30;
-    case 5 ;        cc = 10.50;   % Proportial gain for sea state 5 that offers the maximum energy extracted = 18.2770
-    case 6 ;        cc = 16.70;    % Proportial gain for sea state 6 that offers the maximum energy extracted = 55.1943 
-    otherwise;      cc = 0;
+    case 4 ;        Np = 200;   prop_gain = 5.30; 
+    case 5 ;        Np = 280;   prop_gain = 10.50;   % Proportial gain for sea state 5 that offers the maximum energy extracted = 18.2770
+    case 6 ;        Np = 365;   prop_gain = 16.70;    % Proportial gain for sea state 6 that offers the maximum energy extracted = 55.1943 
+    otherwise;      prop_gain = 0;
 end 
-Np  = 100;
+
 qnl = [ 0, 1;
         1, 0 ];
 r_ctrl  = 0.9;               % input penalisation
@@ -102,8 +101,6 @@ scaler_eff      = 1*( eta_motoring - eta_generator ) / 2;
 offset_eff      = ( eta_motoring + eta_generator ) / 2;
 alpha_efft      = 1000;
 
-
-
 %%%%%%%%%%%  Select Information to plot %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    1 = Plot; 0 = No plot
 plotPTO                 = 0; 
@@ -114,4 +111,3 @@ plotPosWaveForceFloat   = 0;      % Plot Float Motion Analysis
 
 %%%%%%%%%%%  Clear Variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear Ac Bc Cc Dc sysC sysD Qp Qv QradM QexcM Rp Rv
-

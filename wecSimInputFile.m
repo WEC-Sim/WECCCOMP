@@ -18,11 +18,11 @@ simu = simulationClass();                           % Create the Simulation Vari
     simu.dt             = 10/1000;                  % Simulation Time-Step [s]
     simu.rampTime       = 25;                       % Wave Ramp Time Length [s]
     simu.endTime        = 200;
-% % % %     switch(SeaState)
-% % % %         case 4;        simu.endTime        = 100;
-% % % %         case 5;        simu.endTime        = 150;
-% % % %         case 6;        simu.endTime        = 200;
-% % % %     end
+%     switch(SeaState)
+%         case 4;        simu.endTime        = 100;
+%         case 5;        simu.endTime        = 150;
+%         case 6;        simu.endTime        = 200;
+%     end
     simu.CITime         = 2;                        % Convolution Time [s]
     simu.explorer       = 'off';                     % Explorer on
     simu.solver         = 'ode4';                   % Turn on ode45
@@ -44,7 +44,7 @@ simu = simulationClass();                           % Create the Simulation Vari
 %     waves.H = 0.0;                                % Wave Height [m]
 %     waves.T = 0.0;                                % Wave Period [s]
     
-%%%%%%%%%%%%%%%%%%%% Rregular Waves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%% Regular Waves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % waves = waveClass('regularCIC');                    % Initialize waveClass
 %     waves.H             = Hm0;                   % Wave Height [m]
 %     waves.T             = Tp;                    % Wave Period [s]
@@ -59,7 +59,7 @@ simu = simulationClass();                           % Create the Simulation Vari
 %     waves.spectrumType  = 'JS';                     % Specify Wave Spectrum Type
 %     waves.freqDisc      = 'EqualEnergy';            % Uses 'EqualEnergy' bins (default) 
 %     waves.gamma         = gamma;
-%     waves.phaseSeed     = 1;                        % Phase is seeded so eta is the same    
+%     waves.phaseSeed     = 3.3;                        % Phase is seeded so eta is the same    
 %     waves.wavegauge1loc = [-1.70, 0];                      % Wave Gauge 1 x-location
 %     waves.wavegauge2loc = [-1.50, 0];                      % Wave Gauge 2 x-location
 %     waves.wavegauge3loc = [-1.25, 0];                      % Wave Gauge 3 x-location
@@ -67,9 +67,9 @@ simu = simulationClass();                           % Create the Simulation Vari
 %%%%%%%%%%%%%%%%%%% Custom Wave Elevation (eta) Import %%%%%%%%%%%%%%%%%%
 waves = waveClass('etaImport');
 switch(SeaState)
-    case 4;        waves.etaDataFile = 'wave4.mat';
-    case 5;        waves.etaDataFile = 'wave5.mat';
-    case 6;        waves.etaDataFile = 'wave6.mat';
+    case 4;        waves.etaDataFile = './waveData/waveProfile4.mat';
+    case 5;        waves.etaDataFile = './waveData/waveProfile5.mat';
+    case 6;        waves.etaDataFile = './waveData/waveProfile6.mat';
     otherwise;     disp('No wave data available');      return;
 end
 

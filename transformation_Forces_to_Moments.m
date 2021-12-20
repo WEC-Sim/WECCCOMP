@@ -5,7 +5,7 @@
 % Mres= -resForce_x * LAfloat * sin( actualPosition + initialPosition ) - resForce_z * LAfloat * cos( actualPosition + initialPosition ) + resM,pitch
 close all; clc;
 controller_init();
-load('./output/WaveStar_matlabWorkspace.mat')
+load('./waveData/WaveStar_SS4_noControl.mat')
 timePlot        = output.bodies( 1 ).time;
 dt              = mean(diff(timePlot));                %Sampling time
 positionArm     = output.bodies( 2 ).position;
@@ -41,7 +41,7 @@ radM = -xFrad .* LAfloat .* sin( Theta0 + theta ) - zFrad .* LAfloat .* cos( The
 resM = -xFres .* LAfloat .* sin( Theta0 + theta ) - zFres .* LAfloat .* cos( Theta0 + theta ) + pitchMres ;   % Restoring moment
 
 time = timePlot;
-% save('Moments6.mat',"time","dt","theta","Dtheta","excM","radM","resM",'-mat')
+% save('Moments4.mat',"time","dt","theta","Dtheta","excM","radM","resM",'-mat')
 timePlot = time;
 % Plots
 plotforces = 0;
@@ -104,16 +104,3 @@ figure('Name','Restoring forces and Moment','Units','Normalized','OuterPosition'
                             ylim([-1.2*max(max(theta), abs(min(theta))) 1.2*max(max(theta), abs(min(theta)))]);
                             legend('Wave elevation','Arm position - theta')
 end
-figure('Name','Arm acceleration','Units','Normalized','OuterPosition', [0 0 1 1] );
-        plot(timePlot,accelerationArm(:,5),'k-');   grid on;    grid minor;  box on; hold on;
-        plot(timePlot,(excM - radM - resM - bv*velocityArm(:,5))./ Jt,'b--');      
-        legend('Arm direct output Acc.','Computed')
-
-figure('Name','Normalised excitation moment and wave elevation','Units','Normalized','OuterPosition', [0 0 1 1] );
-yyaxis left
-plot( timePlot(ti:tf), excM(ti:tf), 'k' );  hold on;   grid on;    grid minor;  box on;
-ylim([-1.2*max(excM) 1.2*max(excM)])
-yyaxis right
-plot( timePlot(ti:tf), output.wave.elevation(ti:tf), 'r' );
-ylim([-1.2*max(output.wave.elevation) 1.2*max(output.wave.elevation)])
-legend('exM','Wave Elevation','Location', 'best')
