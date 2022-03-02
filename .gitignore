@@ -60,6 +60,8 @@ $ cat .gitignore
 **/output/
 **/slprj/
 *build_exception*
+*.mat
+!WECCCOMP_ss.mat
 
 # Other
 .DS_Store
