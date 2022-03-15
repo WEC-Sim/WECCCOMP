@@ -13,7 +13,7 @@ save(filename, 'mcr','output','waves','EC');
 
 %Store Data
 mcr.power_average(imcr) = power_average;
-mcr.pto_damping(imcr)  = pto(1).c;
+mcr.pto_damping(imcr)  = pto(1).damping;
 mcr.EC(imcr) = EC;
 
 %% Close previous results
@@ -63,6 +63,5 @@ if imcr == length(mcr.cases)
     bar(EC)
     xlabel('Sea State')
     ylabel('Evaluation Criteria (EC)')
-
 
 end
