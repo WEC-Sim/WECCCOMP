@@ -100,26 +100,26 @@ body(5).cb              = [0 0 0];                  % Specify Cb
 %% PTO and Constraint Class
 %% Rigid Connnection between Arm and Float
 constraint(1) = constraintClass('Arm-Float');       % Initialize constraintClass
-constraint(1).location = [0 0 0.09];                % Constraint locatation [m]
-
-%% Linear Motor
-pto(1) = ptoClass('PTO');                           % Initialize ptoClass
-pto(1).location = [-0.438 0 0.714];                 % PTO locatation [m]
-pto(1).orientation.z = [183.4398/379.5826 0 332.3142/379.5823];  % PTO orientation
-pto(1).damping = 0;                                 % Joint Internal Damping Coefficient
-
-%% C - Revolute
-pto(2) = ptoClass('C');                             % Initialize constraintClass
-pto(2).location = [-0.6214398 0 0.3816858];         % PTO locatation [m]
+    constraint(1).location = [0 0 0.09];                 % Constraint Location [m]
+    
+%% A - Revolute
+constraint(2) = constraintClass('A');               % Initialize constraintClass
+    constraint(2).location = [-0.438 0 0.302];           % Constraint Location [m]
 
 %% B - Revolute
-pto(3) = ptoClass('B');                             % Initialize constraintClass
-pto(3).location = [-0.438 0 0.714];                 % PTO locatation [m]    
-
-%% A - Revolute
-pto(4) = ptoClass('A');                             % Initialize constraintClass
-pto(4).location = [-0.438 0 0.302];                 % PTO locatation [m]
+constraint(3) = constraintClass('B');               % Initialize constraintClass
+    constraint(3).location = [-0.438 0 0.714];          	% Constraint Location [m]    
+ 
+%% Linear Motor
+pto(1) = ptoClass('PTO');                           % Initialize ptoClass
+    pto(1).location = [-0.438 0 0.714];                  % PTO Location [m]
+    pto(1).orientation.z = [183.4398/379.5826 0 332.3142/379.5823];  % PTO orientation
+    pto(1).damping = 0;                                   % Joint Internal Damping Coefficient
+%% C - Revolute
+constraint(4) = constraintClass('C');               % Initialize constraintClass
+    constraint(4).location = [-0.6214398 0 0.3816858];   % Constraint Location [m]
 
 %% Frame - Fixed
-constraint(2) = constraintClass('Fixed');           % Initialize constraintClass
-constraint(2).location = [-0.438 0 1.5];            % Constraint locatation [m]
+constraint(5) = constraintClass('Fixed');           % Initialize constraintClass
+    constraint(5).location = [-0.438 0 1.5];             % Constraint Location [m]
+    
