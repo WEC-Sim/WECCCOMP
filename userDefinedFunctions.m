@@ -5,7 +5,7 @@ close all
 clear power power_eff
 
 %% Plot waves
-waves.plotEta(simu.rampTime);
+waves.plotElevation(simu.rampTime);
 hold on
 plot([25 25],[1.5*min(waves.waveAmpTime(:,2)),1.5*max(waves.waveAmpTime(:,2))])
 legend('\eta','rampTime','powerCalcTime')
@@ -30,7 +30,7 @@ time = time(ii:end);
 % force = -output.ptos.forceActuation(ii:end,3);
 % vel = output.ptos.velocity(ii:end,3);
 % power = force.*vel;
-power = output.ptos.powerInternalMechanics(ii:end,3);
+power = output.ptos(1).powerInternalMechanics(ii:end,3);
 eff = 0.7;
 for i = 1:length(power)
     if power(i)>= 0
@@ -49,8 +49,8 @@ legend('power','power w/eff')
 
 
 %% Calculate Evaluation Criteria (EC)
-pto_force = output.ptos.forceInternalMechanics(ii:end,3);
-pto_displacement = output.ptos.position(ii:end,3);
+pto_force = output.ptos(1).forceInternalMechanics(ii:end,3);
+pto_displacement = output.ptos(1).position(ii:end,3);
 
 f_98 = prctile(abs(pto_force),98);
 f_max = 60;
