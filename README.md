@@ -1,7 +1,5 @@
 # WECCCOMP – WEC Control Competition
 
-## The WECCCOMP model is now available on the [WEC-Sim_Applications repository](https://github.com/WEC-Sim/WEC-Sim_Applications). This repository has been archived. 
-
 **Author:**          Kelley Ruehl (Sandia), Nathan Tom (NREL), Yi-Hsiang Yu (NREL) and Francesco Ferri (Aalborg)
 
 **WEC-Sim Version:** v5.0 for master branch, v3.0 for [WECCCOMP competition models](https://github.com/WEC-Sim/WECCCOMP/tags)
@@ -15,3 +13,6 @@ Numerical model for the WEC Control Competition (WECCCOMP) using WEC-Sim to mode
 **Questions?**
 * Post all WEC-Sim modeling questions to the [WEC-Sim online forum](https://github.com/WEC-Sim/WEC-Sim/issues).
 * Post all WECCCOMP control competition questions to the [WECCCOMP online forum](http://www.eeng.nuim.ie/coer/control-competition-forum-login/). 
+
+## The WECCCOMP model is now available on the [WEC-Sim_Applications repository](https://github.com/WEC-Sim/WEC-Sim_Applications). This repository has been archived. 
+
