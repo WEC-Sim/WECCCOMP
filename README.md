@@ -2,9 +2,9 @@
 
 **Author:**          Kelley Ruehl (Sandia), Nathan Tom (NREL), Yi-Hsiang Yu (NREL) and Francesco Ferri (Aalborg)
 
-**WEC-Sim Version:** v4.2 (or newer)
+**WEC-Sim Version:** v5.0
 
-**Matlab Version:** 2019b (or newer), and Statistics and Machine Learning Toolbox for [prctile](
+**Matlab Version:** 2020b (or newer), and Statistics and Machine Learning Toolbox for [prctile](
 https://www.mathworks.com/help/stats/prctile.html) function.
 
 **WEC-Sim Model**
